@@ -13,14 +13,16 @@ fun MainScreen(viewModel: TodoViewModel) {
 
     NavHost(navController = navController, startDestination = "todo_list") {
         composable("todo_list") { TodoListPage(viewModel = viewModel, navController) }
-        composable("new_page/{itemDes}",
+        composable("new_page/{itemDes}/{itemId}",
             arguments = listOf(
                 navArgument("itemDes") { type = NavType.StringType },
+                navArgument("itemId") { type = NavType.IntType },
 
             )
         ) { backstack->
             val itemDes = backstack.arguments?.getString("itemDes")
-            NewPage(itemDes)
+            val itemId = backstack.arguments?.getInt("itemId")
+            NewPage(itemId,itemDes,viewModel)
         }
     }
 

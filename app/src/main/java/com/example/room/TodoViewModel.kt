@@ -1,5 +1,6 @@
 package com.example.room
 
+import android.accounts.AuthenticatorDescription
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,9 +18,21 @@ class TodoViewModel: ViewModel() {
 
     fun addTodo(title: String){
         viewModelScope.launch(Dispatchers.IO) {
-            todoDao.addTodo(Todo(title = title, createdAt = Date.from(Instant.now()), description = "2"))
+            todoDao.addTodo(Todo(title = title, createdAt = Date.from(Instant.now()), description = ""))
         }
     }
+
+    fun updateTodoTitle(id: Int, title: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            todoDao.updateTodoTitle(id, title)
+        }
+    }
+    fun updateTodoDescription(id: Int, description: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            todoDao.updateTodoDescription(id, description)
+        }
+    }
+
 
     fun deleteTodo(id: Int){
         viewModelScope.launch(Dispatchers.IO) {

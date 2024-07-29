@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -65,7 +66,8 @@ fun TodoListPage(viewModel: TodoViewModel, navController: NavHostController,){
             OutlinedTextField(modifier = Modifier.weight(0.7f), value = inputText, onValueChange = {
                 inputText = it
             })
-//            Spacer(modifier = Modifier.padding(start = 5.dp))
+
+
             Button(modifier = Modifier.padding(start = 5.dp), onClick = {
                 if(inputText.trim().isNotEmpty()){
                     viewModel.addTodo(inputText)
@@ -81,7 +83,7 @@ fun TodoListPage(viewModel: TodoViewModel, navController: NavHostController,){
             LazyColumn(
                 content = {
                     itemsIndexed(it){index, item ->
-                        TodoItem(item = item, navController) {
+                        TodoItem(item = item, navController,viewModel) {
                             viewModel.deleteTodo(item.id)
                         }
                     }
@@ -93,7 +95,7 @@ fun TodoListPage(viewModel: TodoViewModel, navController: NavHostController,){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TodoItem(item: Todo, navController: NavHostController, onDelete: () -> Unit) {
+fun TodoItem(item: Todo, navController: NavHostController,viewModel: TodoViewModel, onDelete: () -> Unit) {
 
     val context = LocalContext.current
 
@@ -113,7 +115,7 @@ fun TodoItem(item: Todo, navController: NavHostController, onDelete: () -> Unit)
             .background(MaterialTheme.colorScheme.primary)
             .padding(16.dp)
             .clickable {
-                navController.navigate("new_page/${item.description}")
+                navController.navigate("new_page/${item.description}/${item.id}")
             },
         verticalAlignment = Alignment.CenterVertically,
 
@@ -128,6 +130,8 @@ fun TodoItem(item: Todo, navController: NavHostController, onDelete: () -> Unit)
             )
 
             Text(
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
                 text = "${item.title} ,${item.description}",
                 fontSize = 20.sp,
                 color = Color.White
@@ -154,6 +158,7 @@ fun TodoItem(item: Todo, navController: NavHostController, onDelete: () -> Unit)
             TextButton(onClick = {
                 showDialog = false
                 item.title = editableText
+                viewModel.updateTodoTitle(item.id, title = item.title)
             }) {
                 Text(text = "Ok")
             }

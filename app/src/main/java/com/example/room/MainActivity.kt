@@ -18,14 +18,12 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             RoomTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
 
                     MainScreen(viewModel = viewModel)
-//                    TodoListPage(viewModel = viewModel)
 
                 }
             }

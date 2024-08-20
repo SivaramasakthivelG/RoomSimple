@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.example.room"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.room"
@@ -78,7 +78,7 @@ dependencies {
 
     implementation("androidx.compose.runtime:runtime-livedata:1.6.8")
 
-    implementation("androidx.navigation:navigation-compose:2.8.0-beta05")
+    implementation("androidx.navigation:navigation-compose:2.8.0-beta07")
 
 
 }
